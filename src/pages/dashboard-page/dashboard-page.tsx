@@ -5,7 +5,6 @@ import { Spin } from "antd";
 
 const DashboardPage = () => {
     const { userData } = useAuth();
-    console.log('userData: ', userData);
     const { data, isLoading } = useProjects();
 
     if (userData === null) return null;

@@ -1,10 +1,11 @@
-import { Button, Form, Input, FormProps } from "antd";
+import { Button, Form, Input, FormProps, Select } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { openNotificationWithIcon } from "../../../utils/notification";
 import axios from "axios";
 import { useModalContext } from "../../../context/modal-context";
 import { useAuth } from "../../../context/auth-context";
 import useProjects from "../../../hooks/use-projects";
+import useUsers from "../../../hooks/use-users";
 
 interface FieldType {
     title: string;
@@ -15,10 +16,13 @@ interface FieldType {
 const NewProjectModal = () => {
     const { hideModal } = useModalContext();
     const { userToken } = useAuth();
-    const { refetch } = useProjects()
+    const { refetch } = useProjects();
+
+    const { data } = useUsers();
+    console.log('data: ', data);
+
 
     const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-
         axios.post(`${process.env.REACT_APP_API_URL}/projects`, {
             data: {
                 title: values.title,
@@ -44,6 +48,9 @@ const NewProjectModal = () => {
         >
             <Form.Item name="title" label="Название проекта">
                 <Input className="w-full" />
+            </Form.Item>
+            <Form.Item name="contrator" label="Ответственный">
+                <Select className="w-full" />
             </Form.Item>
             <Form.Item name="description" label="Описание проекта">
                 <TextArea className="w-full" />

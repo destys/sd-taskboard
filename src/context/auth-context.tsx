@@ -8,7 +8,7 @@ interface AuthContextProps {
     userId: number | null;
     userToken: string | null;
     userData: User | null;
-    login: (token: string) => void;
+    login: (token: string, user: { jwt: string, user: User }) => void;
     logout: () => void;
 }
 
@@ -21,10 +21,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const [userToken, setUserToken] = useState<string | null>(null);
     const [userData, setUserData] = useState<User | null>(null);
 
-    const login = (token: string) => {
+    const login = (token: string, user: { jwt: string, user: User }) => {
         localStorage.setItem('token', token);
         setIsAuthenticated(true);
         setUserToken(token);
+        setUserData(user.user);
+        setUserId(user.user.id);
     };
 
     const logout = () => {

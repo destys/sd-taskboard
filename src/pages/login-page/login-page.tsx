@@ -23,7 +23,7 @@ const LoginPage: React.FC = () => {
       identifier: values.username,
       password: values.password,
     }).then(response => {
-      login(response.data.jwt);
+      login(response.data.jwt, response.data);
     }).catch(error => {
       console.error('Login failed', error);
       setError(error.message);
