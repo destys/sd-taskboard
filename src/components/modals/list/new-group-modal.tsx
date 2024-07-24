@@ -44,7 +44,7 @@ const NewGroupModal: React.FC<INewGroupModal> = ({ project }) => {
             openNotificationWithIcon('success', `Группа создана`, '')
         }).catch(error => {
             console.error(error)
-            openNotificationWithIcon('error', 'Ошибка создания группы', '');
+            openNotificationWithIcon('error', 'Ошибка создания группы', error.message);
         });
     }
     return (

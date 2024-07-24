@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useAuth } from '../../../context/auth-context';
 import useProject from '../../../hooks/use-project';
 import { Popconfirm } from 'antd';
+import { openNotificationWithIcon } from '../../../utils/notification';
 
 interface IActions {
     task: Task;
@@ -20,8 +21,12 @@ const Actions: React.FC<IActions> = ({ task }) => {
             }
         }).then(() => {
             refetch();
-            
-        }).catch(error => console.error(error))
+            openNotificationWithIcon('success', 'Задача удалена', ``);
+
+        }).catch(error => {
+            console.error(error);
+            openNotificationWithIcon('error', 'Ошибка удаления задачи', error.message);
+        })
     }
 
     return (

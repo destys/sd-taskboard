@@ -6,7 +6,7 @@ import { useModalContext } from "../../context/modal-context";
 
 const ProjectPage = () => {
     const params = useParams();
-    const { data, isLoading } = useProject(params.id ? parseInt(params.id) : 0);
+    const { data, isFetching } = useProject(params.id ? parseInt(params.id) : 0);
     const { showModal } = useModalContext();
 
     if (!data) {
@@ -20,7 +20,7 @@ const ProjectPage = () => {
     }
 
     return (
-        <Spin tip="Loading..." spinning={isLoading} className="flex justify-center items-center">
+        <Spin tip="Loading..." spinning={isFetching} className="flex justify-center items-center">
             <div>
                 <h1 className="mb-6">{data?.title}</h1>
                 <Button type="primary" onClick={handleCreateGroup}>Создать группу задач</Button>

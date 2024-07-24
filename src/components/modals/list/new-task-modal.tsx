@@ -5,6 +5,7 @@ import { Group } from "../../../types";
 import { useAuth } from "../../../context/auth-context";
 import useProject from "../../../hooks/use-project";
 import { useModalContext } from "../../../context/modal-context";
+import { openNotificationWithIcon } from "../../../utils/notification";
 
 interface INewTaskModal {
     group: Group;
@@ -38,7 +39,11 @@ const NewTaskModal: React.FC<INewTaskModal> = ({ group }) => {
         }).then(() => {
             refetch();
             hideModal();
-        }).catch(error => console.error(error));
+            openNotificationWithIcon('success', `Задача создана`, '')
+        }).catch(error => {
+            console.error(error);
+            openNotificationWithIcon('error', 'Ошибка создания задачи', error.message);
+        });
     }
     return (
         <Form

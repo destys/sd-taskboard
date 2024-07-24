@@ -38,21 +38,20 @@ const SpentTime: React.FC<TimerProps> = ({ initialSeconds, taskId, projectId }) 
         };
     }, [isRunning]);
 
-    const sendTimeToServer = async () => {
-        try {
-            const response = await axios.put(`${process.env.REACT_APP_API_URL}/tasks/${taskId}`, { data: { spent_time: seconds } }, {
-                headers: {
-                    Authorization: `Bearer ${userToken}`,
-                },
-            });
+    const sendTimeToServer = () => {
+        axios.put(`${process.env.REACT_APP_API_URL}/tasks/${taskId}`, { data: { spent_time: seconds } }, {
+            headers: {
+                Authorization: `Bearer ${userToken}`,
+            },
+        }).then(response => {
             if (response.status === 200) {
                 refetch();
                 openNotificationWithIcon('success', 'Время изменено', `Время успешно изменено на ${formatTime(seconds)}`);
             }
-        } catch (error) {
+        }).catch(error => {
             console.error('Error sending time:', error);
-            openNotificationWithIcon('error', 'Ошибка', 'Произошла ошибка при изменении времени');
-        }
+            openNotificationWithIcon('error', 'Ошибка', error.message);
+        });
     };
 
     const handleButtonClick = () => {

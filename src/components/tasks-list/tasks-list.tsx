@@ -94,7 +94,7 @@ const TasksList: React.FC<ITasksList> = ({ group }) => {
 
     return (
         <div>
-            <Table columns={columns} dataSource={tasks} scroll={{ x: 1100, y: 600 }} />
+            <Table columns={columns} dataSource={tasks} scroll={{ x: 1000, y: 600 }} />
             <div className="mt-4 text-right">
                 <span>Итого к оплате: </span>
                 <span className="font-bold">{totalCost.toFixed(2)} {group.currency}</span>

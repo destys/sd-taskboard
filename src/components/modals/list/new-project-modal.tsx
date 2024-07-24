@@ -33,8 +33,7 @@ const NewProjectModal = () => {
             hideModal();
             openNotificationWithIcon('success', `Проект создан`, '')
         }).catch(error => {
-            console.error(error)
-            console.log('error: ', error);
+            console.error(error);
             openNotificationWithIcon('error', 'Ошибка создания проекта', error.message);
         });
     }

@@ -30,7 +30,10 @@ const Extra: React.FC<IExtra> = ({ group }) => {
         }).then(() => {
             refetch();
             openNotificationWithIcon('success', 'Группа удалена', ``);
-        }).catch(error => console.error(error))
+        }).catch(error => {
+            console.error(error);
+            openNotificationWithIcon('error', 'Ошибка удаления группы', error.message);
+        })
     }
 
 

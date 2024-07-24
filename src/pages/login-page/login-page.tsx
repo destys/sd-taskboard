@@ -18,18 +18,18 @@ const LoginPage: React.FC = () => {
   const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
     setLoading(true);
     setError(null);
-    try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/auth/local`, {
-        identifier: values.username,
-        password: values.password,
-      });
+
+    axios.post(`${process.env.REACT_APP_API_URL}/auth/local`, {
+      identifier: values.username,
+      password: values.password,
+    }).then(response => {
       login(response.data.jwt);
-    } catch (error) {
-      setError('Неверный логин или пароль')
+    }).catch(error => {
       console.error('Login failed', error);
-    } finally {
+      setError(error.message);
+    }).finally(() => {
       setLoading(false);
-    }
+    });
   };
 
   const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
