@@ -6,20 +6,36 @@ import { useModalContext } from "../../../context/modal-context";
 import { useAuth } from "../../../context/auth-context";
 import useProjects from "../../../hooks/use-projects";
 import useUsers from "../../../hooks/use-users";
+import { useEffect, useState } from "react";
 
 interface FieldType {
     title: string;
     hourly_rate?: number;
     description?: string;
 }
+interface Option {
+    label: string;
+    value: string;
+}
 
 const NewProjectModal = () => {
+    const [options, setOptions] = useState<Option[]>([]);
+    console.log('options: ', options);
     const { hideModal } = useModalContext();
     const { userToken } = useAuth();
     const { refetch } = useProjects();
 
     const { data } = useUsers();
-    console.log('data: ', data);
+
+    useEffect(() => {
+        if (data) {
+            const newOptions: Option[] = data.map(user => ({
+                label: user?.name ?? '',
+                value: user?.id.toString() ?? '',
+            }));
+            setOptions(newOptions);
+        }
+    }, [data]);
 
 
     const onFinish: FormProps<FieldType>['onFinish'] = (values) => {

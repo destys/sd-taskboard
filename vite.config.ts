@@ -15,9 +15,9 @@ export default defineConfig(({ mode }) => {
         registerType: "autoUpdate",
         includeAssets: ["favicon.svg", "robots.txt", "apple-touch-icon.png"],
         manifest: {
-          name: "Garant CRM",
-          short_name: "Garant CRM",
-          description: "Garant CRM",
+          name: "Task Manager SomeDev",
+          short_name: "Task Manager",
+          description: "Task Manager SomeDev",
           theme_color: "#ffffff",
           icons: [
             {
