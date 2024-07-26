@@ -73,7 +73,7 @@ export interface Task {
   createdAt: string;
   updatedAt: string;
   group: Group;
-  comments: Comment[] | number;
+  comments: Comment[];
 }
 
 export interface Comment {
@@ -82,4 +82,34 @@ export interface Comment {
   task: Task;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface FileInterface {
+  id: number;
+
+  name: string;
+  alternativeText: string | null;
+  caption: string | null;
+  width: number;
+  height: number;
+  url: string;
+  formats: {
+    thumbnail: {
+      name: string;
+      hash: string;
+      ext: string;
+      mime: string;
+      url: string;
+    };
+  };
+}
+
+export interface Comment {
+  id: number;
+  text: string;
+  task: Task;
+  createdAt: string;
+  updatedAt: string;
+  user: User;
+  media: FileInterface[];
 }

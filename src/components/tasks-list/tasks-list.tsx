@@ -5,6 +5,7 @@ import SpentTime from "../spent-time/spent-time";
 import StatusSelect from "../ui/status-select";
 import { taskStatusOptions } from "../../constants";
 import Actions from "./components/actions";
+import CommentsCount from "./components/comments/commets-count";
 
 interface ITasksList {
     group: Group;
@@ -13,7 +14,7 @@ interface ITasksList {
 interface DataTask {
     key: React.Key;
     title: string;
-    comments: number;
+    comments: JSX.Element;
     status: JSX.Element;
     deadline: string;
     spent_time: JSX.Element;
@@ -82,7 +83,7 @@ const TasksList: React.FC<ITasksList> = ({ group }) => {
         tasks.push({
             key: task.id,
             title: task.title,
-            comments: 0,
+            comments: <CommentsCount count={task.comments.length} />,
             status: <StatusSelect defaultValue={task.status} options={taskStatusOptions} taskId={task.id} projectId={group.project.id} />,
             deadline: task.deadline,
             spent_time: <SpentTime initialSeconds={task.spent_time} taskId={task.id} projectId={group.project.id} />,
