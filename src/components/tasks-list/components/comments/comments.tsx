@@ -1,6 +1,5 @@
 import { Tabs } from "antd";
 import { Task } from "../../../../types"
-import { useAuth } from "../../../../context/auth-context";
 import CommentsList from "./comments-list";
 
 interface IComments {
@@ -8,8 +7,6 @@ interface IComments {
 }
 
 const Comments: React.FC<IComments> = ({ task }) => {
-    const { role } = useAuth();
-
     const items = [
         {
             label: 'Комментарии',
@@ -28,11 +25,11 @@ const Comments: React.FC<IComments> = ({ task }) => {
         }
     ]
 
-    if (role === 'admin') items.push({
-        label: 'Журнал действий',
-        key: '4',
-        children: 'Tab 4',
-    })
+    /*     if (role === 'admin') items.push({
+            label: 'Журнал действий',
+            key: '4',
+            children: 'Tab 4',
+        }) */
 
     return (
         <div>
