@@ -17,6 +17,7 @@ const SpentTime: React.FC<TimerProps> = ({ initialSeconds, taskId, projectId }) 
     const { userToken } = useAuth();
     const { refetch } = useProject(projectId);
     const [seconds, setSeconds] = useState<number>(initialSeconds);
+
     const [isRunning, setIsRunning] = useState<boolean>(false);
     const intervalRef = useRef<NodeJS.Timeout | null>(null);
     const { openNotificationWithIcon } = useNotificationContext();
@@ -38,16 +39,16 @@ const SpentTime: React.FC<TimerProps> = ({ initialSeconds, taskId, projectId }) 
         };
     }, [isRunning]);
 
+    useEffect(() => {
+        if (seconds % 10 === 0) sendTimeToServer();
+    }, [seconds]);
+
     const sendTimeToServer = () => {
         axios.put(`${process.env.REACT_APP_API_URL}/tasks/${taskId}`, { data: { spent_time: seconds } }, {
             headers: {
                 Authorization: `Bearer ${userToken}`,
             },
-        }).then(response => {
-            if (response.status === 200) {
-                refetch();
-                openNotificationWithIcon('success', 'Время изменено', `Время успешно изменено на ${formatTime(seconds)}`);
-            }
+        }).then(() => {
         }).catch(error => {
             console.error('Error sending time:', error);
             openNotificationWithIcon('error', 'Ошибка', error.message);
@@ -57,6 +58,8 @@ const SpentTime: React.FC<TimerProps> = ({ initialSeconds, taskId, projectId }) 
     const handleButtonClick = () => {
         if (isRunning) {
             sendTimeToServer();
+            refetch();
+            openNotificationWithIcon('success', 'Время изменено', `Время успешно изменено на ${formatTime(seconds)}`);
         }
         setIsRunning(!isRunning);
     };
